@@ -177,9 +177,8 @@
     background: radial-gradient(circle, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%);
   }
   .avatar {
-    width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff;
-    font-size: 30px; font-weight: 800; margin-bottom: 18px;
+    width: 112px; height: 112px; border-radius: 22px; display: block;
+    object-fit: cover; object-position: center 20%; margin-bottom: 18px;
   }
   .profile-card h2 { font-size: 22px; font-weight: 700; }
   .profile-card .role { color: var(--muted); margin-top: 4px; }
@@ -376,7 +375,7 @@
         </div>
 
         <aside class="profile-card reveal" aria-label="Profile summary">
-          <div class="avatar" aria-hidden="true">RH</div>
+          <img class="avatar" src="assets/profile.jpg" alt="Renuka Hulsurkar" width="112" height="112" decoding="async">
           <h2>Renuka Hulsurkar</h2>
           <p class="role">Business Analyst · Data &amp; Analytics</p>
           <ul class="profile-meta">
