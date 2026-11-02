@@ -97,9 +97,8 @@
   .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
   .brand-mark {
-    width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    color: #fff; font-size: 14px; font-weight: 800; letter-spacing: .02em;
+    width: 34px; height: 34px; border-radius: 10px; display: block; flex: none;
+    object-fit: cover; object-position: center 20%;
   }
   .brand small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); line-height: 1.2; }
   .brand span { line-height: 1.2; }
@@ -328,7 +327,7 @@
 <header class="site-header">
   <div class="container nav">
     <a href="#top" class="brand" aria-label="Renuka Hulsurkar, back to top">
-      <span class="brand-mark" aria-hidden="true">RH</span>
+      <img class="brand-mark" src="assets/profile.jpg" alt="" width="34" height="34" decoding="async">
       <span>Renuka Hulsurkar<small>Business Analyst</small></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
