@@ -217,6 +217,13 @@
   .project p { color: var(--muted); font-size: 15.5px; }
   .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 6px; }
   .tag { font-size: 12.5px; font-weight: 500; padding: 5px 10px; border-radius: 999px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    min-height: 44px; padding: 8px 0; color: var(--accent); font-size: 14px; font-weight: 600;
+    text-decoration: underline; text-underline-offset: 4px;
+  }
+  .project-link:hover { color: var(--text); }
+  .project-link svg { width: 16px; height: 16px; flex: none; }
 
   /* ---------- Process ---------- */
   .process { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; counter-reset: step; }
@@ -428,6 +435,10 @@
           <h3>Ericsson Patent Portfolio Forecasting</h3>
           <p>Compared annual forecasting models and segmentation approaches on 30,118 patent records. An unsegmented Random Forest beat its segmented variants on test RMSE, evidence that added model complexity did not consistently improve accuracy.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">Time-Series Forecasting</span><span class="tag">Random Forest</span></div>
+          <a class="project-link" href="https://github.com/renukahulsurkar99/Ericsson-Patent-Forecasting#readme" target="_blank" rel="noopener noreferrer" aria-label="View case study for Ericsson Patent Portfolio Forecasting on GitHub (opens in a new tab)">
+            View case study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
         </article>
 
         <article class="project reveal">
@@ -438,6 +449,10 @@
           <h3>A&amp;E Analytics &amp; Staff Scheduling</h3>
           <p>Breach-risk analysis of 8,781 patient records alongside a staff-scheduling case study, with integer-programming models covering availability, workload fairness and skill coverage, delivered through an interactive Streamlit dashboard.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">Gurobi</span><span class="tag">Streamlit</span></div>
+          <a class="project-link" href="https://github.com/renukahulsurkar99/Python-Analytics-and-Optimisation-#readme" target="_blank" rel="noopener noreferrer" aria-label="View case study for A&amp;E Analytics &amp; Staff Scheduling on GitHub (opens in a new tab)">
+            View case study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
         </article>
 
         <article class="project reveal">
@@ -468,6 +483,10 @@
           <h3>Stablecoin Depegging Events</h3>
           <p>Investigated the stability of USDT, USDC and DAI: causes of depegging, market contagion and recovery dynamics, using event analysis, stress-period correlations, regression and robustness checks.</p>
           <div class="tags"><span class="tag">Event Analysis</span><span class="tag">Regression</span><span class="tag">Risk Analysis</span></div>
+          <a class="project-link" href="https://github.com/renukahulsurkar99/stablecoin-depeg-analysis#readme" target="_blank" rel="noopener noreferrer" aria-label="View case study for Stablecoin Depegging Events on GitHub (opens in a new tab)">
+            View case study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
         </article>      </div>
     </div>
   </section>
