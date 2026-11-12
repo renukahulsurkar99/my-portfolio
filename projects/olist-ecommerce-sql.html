@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Olist E-Commerce SQL Analysis · Renuka Hulsurkar</title>
+  <meta name="description" content="PostgreSQL analysis of 99,441 Olist orders across eight related tables, exploring delivery reliability, customer purchasing, product mix and review scores.">
+  <link rel="canonical" href="https://renuka-hulsurkar.vercel.app/projects/olist-ecommerce-sql.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/case-studies.css">
+  <script src="../assets/case-studies.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../">
+        <img src="../assets/profile.jpg" alt="" width="34" height="34">
+        <span>Renuka Hulsurkar<small>Business Analyst</small></span>
+      </a>
+      <div class="nav-actions">
+        <a href="../#projects">All projects</a>
+        <a href="../#contact">Get in touch</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle colour theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1 1M18 18l1 1M5 19l1-1M18 6l1-1"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="hero">
+      <div class="container">
+        <a class="back" href="../#projects">← Back to projects</a>
+        <div class="eyebrow">Portfolio project · SQL analytics</div>
+        <h1>Olist E-Commerce SQL Analysis</h1>
+        <p class="lead">Using PostgreSQL to connect orders, customers, products and reviews, then investigate sales mix, repeat purchasing and delivery reliability in an anonymised Brazilian marketplace dataset.</p>
+        <ul class="tags" aria-label="Tools and methods">
+          <li>PostgreSQL</li><li>CTEs</li><li>Window Functions</li><li>Cohort Analysis</li><li>Data Quality</li><li>GitHub Actions</li>
+        </ul>
+        <div class="actions">
+          <a class="button primary" style="color:var(--surface)" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis">View SQL project on GitHub →</a>
+          <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis/blob/main/docs/findings.md">Read the full findings →</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>99,441</strong><span>Orders analysed</span></div>
+          <div class="stat"><strong>8</strong><span>Related source tables</span></div>
+          <div class="stat"><strong>15</strong><span>Business analysis queries</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container layout">
+      <aside class="contents">
+        <strong>In this case study</strong>
+        <nav aria-label="Case study sections">
+          <a href="#question">The business question</a>
+          <a href="#approach">The approach</a>
+          <a href="#findings">What the analysis found</a>
+          <a href="#decision">Decision implications</a>
+          <a href="#validation">Validation</a>
+          <a href="#scope">Scope and interpretation</a>
+          <a href="#resources">Source and project files</a>
+        </nav>
+      </aside>
+
+      <article class="story" aria-label="Olist E-Commerce SQL Analysis case study">
+        <section id="question" aria-labelledby="question-title">
+          <h2 id="question-title">The business question</h2>
+          <p>Which customer locations and product categories contribute the most delivered merchandise value? Where are deliveries less reliable, how do reviews differ for late orders, and how often do customers purchase again within the observed period?</p>
+          <p>The project connects eight source files covering customers, orders, items, payments, reviews, products, sellers and category translations. It examines 99,441 orders and 112,650 item records from Olist's 2016–2018 marketplace sample.</p>
+        </section>
+
+        <section id="approach" aria-labelledby="approach-title">
+          <h2 id="approach-title">The approach</h2>
+          <div class="steps">
+            <div class="step">
+              <h3>Model the relationships</h3>
+              <p>Create eight PostgreSQL tables with primary and foreign keys. Use <code>customer_id</code> to connect an order to its customer record and <code>customer_unique_id</code> to recognise repeat purchasers.</p>
+            </div>
+            <div class="step">
+              <h3>Preserve accurate totals</h3>
+              <p>Aggregate item and payment records by order before joining them. Select one latest review per order with a deterministic window-function rule, while preserving every source review record.</p>
+            </div>
+            <div class="step">
+              <h3>Build reproducible analyses</h3>
+              <p>Use joins, CTEs, window functions, percentiles, ranking and cohort analysis across 15 business questions. Export the results and reconcile the reported totals against the source files.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="findings" aria-labelledby="findings-title">
+          <h2 id="findings-title">What the analysis found</h2>
+          <figure>
+            <img src="../assets/olist-analysis-overview.png" alt="Charts showing monthly delivered merchandise value, leading categories, review scores by delivery outcome and states with high late-delivery rates." width="2250" height="1425" loading="lazy" decoding="async">
+            <figcaption>Source data from Olist and collaborators via Kaggle. Monthly chart covers January 2017–August 2018. Late-delivery rates compare calendar dates and exclude eight missing actual delivery dates. Chart shared under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.</figcaption>
+          </figure>
+          <div class="table-wrap">
+            <table>
+              <caption>Delivery reliability and customer reviews</caption>
+              <thead><tr><th scope="col">Measure</th><th scope="col">Result</th><th scope="col">Population</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Late deliveries</th><td>6,534 orders (6.77%)</td><td>96,470 delivered orders with actual and estimated delivery dates</td></tr>
+                <tr><th scope="row">Mean review score for on-time orders</th><td>4.29 out of 5</td><td>89,443 reviewed orders, using the latest response per order</td></tr>
+                <tr><th scope="row">Mean review score for late orders</th><td>2.27 out of 5</td><td>6,381 reviewed orders, using the latest response per order</td></tr>
+                <tr><th scope="row">Observed repeat purchasers</th><td>2,801 customers (3.00%)</td><td>Customers with at least one delivered order in the sample</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>São Paulo contributes 38.33% of delivered merchandise value. Among states with at least 100 eligible deliveries, Alagoas has the highest late rate at 21.41% across 397 orders. Rio de Janeiro combines substantial order volume with a 12.11% late rate.</p>
+          <p>The association between delayed delivery and lower review scores gives a concrete starting point for investigating customer experience alongside geography, seller mix and product categories.</p>
+        </section>
+
+        <section id="decision" aria-labelledby="decision-title">
+          <h2 id="decision-title">Decision implications</h2>
+          <ul>
+            <li>Investigate purchase-to-carrier and carrier-to-customer intervals in locations with high late rates and substantial order volumes.</li>
+            <li>Review freight relative to merchandise value by category when assessing fulfilment options.</li>
+            <li>Compare customer cohorts with similar follow-up periods before drawing conclusions about repeat purchasing.</li>
+          </ul>
+          <p>These are proposed follow-ups from the sample. The project reports analytical findings and has no measured operational intervention.</p>
+        </section>
+
+        <section id="validation" aria-labelledby="validation-title">
+          <h2 id="validation-title">Validation</h2>
+          <p>The complete dataset was imported and reloaded successfully in PostgreSQL 18.6. All 15 business queries, source-count controls and monetary reconciliation checks passed, and their results matched an independent execution in embedded PostgreSQL 17.5.</p>
+          <p>GitHub Actions runs PostgreSQL 16 checks using synthetic records designed to exercise multiple items, payments and reviews per order, missing dates, same-day deliveries, empty calendar months and cohort observation windows.</p>
+          <div class="resources">
+            <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis/actions">View automated checks →</a>
+            <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis/blob/main/results/analysis.md">Inspect all query results →</a>
+          </div>
+        </section>
+
+        <section id="scope" aria-labelledby="scope-title">
+          <h2 id="scope-title">Scope and interpretation</h2>
+          <p>Late delivery means the actual delivery day exceeds the estimated day. Eight delivered orders with missing actual dates are excluded from that rate. Review comparisons use the latest recorded response per order and describe an association.</p>
+          <p>Merchandise value sums item prices for delivered orders. Freight and recorded payments are separate measures. The source lacks the cost and refund records needed to calculate profit or accounting net revenue.</p>
+          <p>Repeat purchasing is measured within the observed dataset. Customers entering near the end have shorter follow-up, and very small cohorts can produce extreme percentages. The analysis represents Olist's historical sample.</p>
+          <p>Data modelling, SQL logic, metric choices and validation are documented in the repository.</p>
+        </section>
+
+        <section id="resources" aria-labelledby="resources-title">
+          <h2 id="resources-title">Source and project files</h2>
+          <p>The <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce">Brazilian E-Commerce Public Dataset by Olist</a> was provided by Olist and collaborators under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>. The project records source fingerprints and provides instructions for reproducing the analysis.</p>
+          <div class="resources">
+            <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis">GitHub repository →</a>
+            <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis/blob/main/docs/methodology.md">Data and metric definitions →</a>
+            <a class="button" href="https://github.com/renukahulsurkar99/Olist-Ecommerce-SQL-Analysis/blob/main/docs/walkthrough.md">Learning walkthrough →</a>
+          </div>
+        </section>
+
+        <h2>More project work</h2>
+        <nav class="case-nav" aria-label="Other case studies">
+          <a class="button" href="ericsson-patent-forecasting.html">Ericsson Patent Portfolio Forecasting →</a>
+          <a class="button" href="stablecoin-depegging.html">Stablecoin Depegging Events →</a>
+        </nav>
+        <div class="actions"><a class="button" href="../#projects">← All projects</a><a class="button" href="../#contact">Discuss a role or project →</a></div>
+      </article>
+    </div>
+  </main>
+  <footer class="footer"><div class="container"><span>© 2026 Renuka Hulsurkar</span><a href="../#contact">Get in touch</a></div></footer>
+</body>
+</html>
